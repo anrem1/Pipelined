@@ -42,6 +42,9 @@ wire [31:0] MEM_WB_Mem_out, MEM_WB_ALU_out;
 wire [1:0] MEM_WB_Ctrl;
 wire [4:0] MEM_WB_Rd;
 
+// forward 
+wire [1:0] forwardA, forwardB;
+wire [31:0] fmux_out, smux_out;
 
 nreg #32 PC(result_pc, pc_out, load, rst, clk);
 
@@ -83,9 +86,32 @@ rca rca_inst( ID_EX_PC, shift_out, temp_pc2, overflow);
   // put in mux after regfile (32 input?) (make sure order is correct)
   nmux2x1#(32) mux_reg(ID_EX_Ctrl[3], ID_EX_RegR2, ID_EX_Imm, B);
   
+  forward forward(
+        ID_EX_Rs1, 
+        ID_EX_Rs2, 
+        EX_MEM_Rd, 
+        MEM_WB_Rd,
+         EX_MEM_Ctrl[4], 
+         MEM_WB_Ctrl[1],
+        forwardA,
+        forwardB);
+ 
+    mux4x1 #(32) first_mux4x1(
+forwardA,                // 2-bit select line
+   ID_EX_RegR1, data_mux_out, EX_MEM_ALU_out, 32'b0, 
+    fmux_out        
+);
+
+
+   mux4x1 #(32) second_mux4x1(
+forwardB,                // 2-bit select line
+    B, data_mux_out, EX_MEM_ALU_out, 32'b0, 
+    smux_out        
+);
+
   aluctrl aluctrl(ID_EX_Ctrl[1:0], ID_EX_Func[2:1], ID_EX_Func[0] , alusel );
 
-  alu #(32) aluinst(ID_EX_RegR1,  B, alusel, alures, zero);
+  alu #(32) aluinst(fmux_out,  smux_out, alusel, alures, zero);
   
   // 5 + 32 + 1 + 32 + 32 + 5
   nreg #(107) EX_MEM(

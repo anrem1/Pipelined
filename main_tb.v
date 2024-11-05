@@ -18,7 +18,7 @@ module main_tb(
     #10 
     rst = 0;    
     ssdSel = 4'b0000;
-    #130
+    #400
     $finish;
     end
     
