@@ -47,6 +47,7 @@ wire [31:0] MEM_WB_Mem_out, MEM_WB_ALU_out;
 wire [4:0] MEM_WB_Ctrl;
 wire [4:0] MEM_WB_Rd;
 wire [31:0] MEM_WB_PC;
+wire [31:0] MEM_WB_temp_pc; 
 
 // forward 
 wire [1:0] forwardA, forwardB;
@@ -57,7 +58,7 @@ wire [31:0] up_imm;     // result of mux that chooses between lui and auipc
 wire [31:0] EX_MEM_Jal_tar, EX_MEM_Jalr_tar;        // holds values of jal and jalr 
 
 wire stall;
-
+wire [31:0] choose_mem;
 //reg halt;
 //nreg #32 PC((halt ? pc_out : result_pc), pc_out, load, rst, clk);
 
@@ -80,7 +81,7 @@ nreg #(64) IF_ID (
 control ctrl( IF_ID_Inst[6:2], branch, mr, mwrite, alusrc, regwr, aluop, mtoreg, jal, jalr);
 // in, output reg branch, mr, mwrite, alusrc, regwr, output reg [1:0] aluop, output reg [1:0] mtoreg, output reg jal, jalr
 // put in reg file 
- regfile regs( .wsig(MEM_WB_Ctrl[1]) ,  .clk(clk),  .rst(rst), .radd1(IF_ID_Inst[19:15]) , .radd2(IF_ID_Inst[24:20]), .wadd(MEM_WB_Rd), 
+ regfile regs( .wsig(MEM_WB_Ctrl[4]) ,  .clk(clk),  .rst(rst), .radd1(IF_ID_Inst[19:15]) , .radd2(IF_ID_Inst[24:20]), .wadd(MEM_WB_Rd), 
   .wdata(data_mux_out),  .rdata1(rdata1) , .rdata2(rdata2));
   
   // put in imm gen
@@ -109,8 +110,8 @@ rca rca_inst( ID_EX_PC, shift_out, temp_pc2, overflow);
         ID_EX_Rs2, 
         EX_MEM_Rd, 
         MEM_WB_Rd,
-       /*  EX_MEM_Ctrl[7]*/ 1'b0,        // changed
-        /* MEM_WB_Ctrl[4]*/ 1'b0,        // changed
+         EX_MEM_Ctrl[7],        // changed
+         MEM_WB_Ctrl[4],        // changed
         forwardA,
         forwardB);
  
@@ -165,9 +166,11 @@ rca rca_inst( ID_EX_PC, shift_out, temp_pc2, overflow);
     
  // HOW TO CHOOSE INSTR VS DATA MEM  (clk ???? or if it's writing or reading from data memory then access data mem?) 
  // EX_MEM_Ctrl[3] || EX_MEM_Ctrl[2] data read / write 
-// nmux2x1#(32) mem_choose(clk, EX_MEM_PC, );
+ // ***************************
+ 
+ nmux2x1#(32) mem_choose(clk, pc_out[7:2], EX_MEM_ALU_out[7:2], choose_mem);
   // what to put for addr and data in? for EX_MEM_ALU_out[7:2] & EX_MEM_RegR2
-  DataMem data_mem( .clk(clk), .MemRead(EX_MEM_Ctrl[3]) , .MemWrite(EX_MEM_Ctrl[2]), .funct3(ID_EX_Func[3:1]), .addr(EX_MEM_ALU_out[7:2]), .data_in(EX_MEM_RegR2), .data_out(data_mem_out));
+  DataMem data_mem( .clk(clk), .MemRead(EX_MEM_Ctrl[3]) , .MemWrite(EX_MEM_Ctrl[2]), .funct3(ID_EX_Func[3:1]), .addr(choose_mem), .data_in(EX_MEM_RegR2), .data_out(data_mem_out));
   
   // and branch signal and zero flag
   assign pcsrc = (EX_MEM_Ctrl[4] & EX_MEM_Zero);
@@ -188,24 +191,22 @@ rca rca_inst( ID_EX_PC, shift_out, temp_pc2, overflow);
   // put in mux 
 //   nmux2x1#(32) nmux_inst(MEM_WB_Ctrl[0], MEM_WB_ALU_out, MEM_WB_Mem_out, data_mux_out);
  
- assign EX_MEM_temp_pc = EX_MEM_PC + 4; 
+// assign EX_MEM_temp_pc = EX_MEM_PC + 4; 
 
 
  // UPDATE THIS !!!!  put auipc/lui stuff later  *****
-   mux4x1 #(32) data_mux ( MEM_WB_Ctrl[3:2], MEM_WB_temp_pc, MEM_WB_ALU_out, MEM_WB_Mem_out,  /*up_imm*/ 32'b0,  data_mux_out);
+   mux4x1 #(32) data_mux ( MEM_WB_Ctrl[3:2], EX_MEM_temp_pc, MEM_WB_ALU_out, MEM_WB_Mem_out,  /*up_imm*/ 32'b0,  data_mux_out);
 
  
-
-    nmux2x1#(32) pc_mux(pcsrc,  MEM_WB_temp_pc, EX_MEM_BranchAddOut, result_pc);
+// mux4x1 #(32) pc_mux(pcsrc, pc_out + 4, EX_MEM_BranchAddOut, , 32'b0, result_pc); 
+//    nmux2x1#(32) pc_mux(pcsrc,  MEM_WB_temp_pc, EX_MEM_BranchAddOut, result_pc);
 
 //nmux2x1#(32) pc_mux(branch_taken, temp_pc, temp_pc2, result_pc);
-  
 
-  
-//  assign result_pc = (jal) ? jal_target : 
-//                     (jalr) ? jalr_target : 
-//                     (branch_taken) ? temp_pc2 : 
-//                     (pc_out + 4);
+  assign result_pc = (EX_MEM_Ctrl[1]) ? jal_target : 
+                     (EX_MEM_Ctrl[0]) ? jalr_target : 
+                     (EX_MEM_Ctrl[4]) ? EX_MEM_BranchAddOut : 
+                     (pc_out + 4);
  
 //always @(*) begin
 //      halt = 1'b0;  
