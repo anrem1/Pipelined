@@ -48,7 +48,7 @@ module control(input rst, input [4:0] in, output reg branch, mr, mwrite, alusrc,
             5'b00011: begin // fence 
                 branch = 0; mr = 0; mtoreg = 2'b00 ; aluop = 2'b00 ; mwrite = 0; alusrc = 0;  regwr = 0; jal = 0; jalr = 0 ;
                 end
-                5'b11100: begin // ebreak 
+            5'b11100: begin // ebreak 
                 branch = 0; mr = 0; mtoreg = 2'b00 ; aluop = 2'b00 ; mwrite = 0; alusrc = 0;  regwr = 0; jal = 0; jalr = 0 ;
                 end
             default: begin 
