@@ -37,30 +37,30 @@ input [4:0] ID_EX_rs1,
  forwardA = 2'b10;
  end
  else 
- forwardA = 2'b00;
- 
- 
- if( (EX_MEM_regwr && EX_MEM_rd != 0) && EX_MEM_rd == ID_EX_rs2)
- forwardB = 2'b10;
- else 
- forwardB = 2'b00;
-
-  
- 
- // MEM HAZARD
-if((( MEM_WB_regwr && MEM_WB_rd != 0) && ( MEM_WB_rd == ID_EX_rs1)) 
+ if((( MEM_WB_regwr && MEM_WB_rd != 0) && ( MEM_WB_rd == ID_EX_rs1)) 
 && !(EX_MEM_regwr && (EX_MEM_rd != 0) && (EX_MEM_rd == ID_EX_rs1)))
  forwardA = 2'b01;
  else 
  forwardA = 2'b00;
  
  
-
- if((MEM_WB_regwr && (MEM_WB_rd != 0)
+ if( (EX_MEM_regwr && EX_MEM_rd != 0) && EX_MEM_rd == ID_EX_rs2)
+ forwardB = 2'b10;
+ else 
+  if((MEM_WB_regwr && (MEM_WB_rd != 0)
  && (MEM_WB_rd == ID_EX_rs2))
  && !(EX_MEM_regwr && EX_MEM_rd != 0 && EX_MEM_rd == ID_EX_rs2))
     forwardB = 2'b01;
   else 
  forwardB = 2'b00;
+
+  
+ 
+ // MEM HAZARD
+
+ 
+ 
+
+
  end
 endmodule
