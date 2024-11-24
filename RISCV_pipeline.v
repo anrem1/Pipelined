@@ -76,7 +76,7 @@ nreg #(64) IF_ID (
     .Q({IF_ID_PC, IF_ID_Inst}), 
     .load(!stall), 
     .rst(rst), 
-    .clk(~clk));        // takes not clock   
+    .clk(clk));        // takes not clock   
     
     
 // WHERE IS JAL AND JALR COMING FROM 
@@ -172,7 +172,7 @@ rca rca_inst( ID_EX_PC, ID_EX_Imm, temp_pc2, overflow);
   .Q({EXMEMfunc, EX_MEM_Ctrl, EX_MEM_PC, EX_MEM_BranchAddOut, EX_MEM_Zero, EX_MEM_ALU_out, EX_MEM_RegR2, EX_MEM_Rd, EX_MEM_Jal_tar, EX_MEM_Jalr_tar}), 
   .load(load), 
   .rst(rst), 
-  .clk(~clk));      // takes not clock 
+  .clk(clk));      // takes not clock 
   
   // put in data mem
   // added 3 bit func

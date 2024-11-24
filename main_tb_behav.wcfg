@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="0 ps"></ZoomStartTime>
-      <ZoomEndTime time="7 ps"></ZoomEndTime>
-      <Cursor1Time time="510,000 ps"></Cursor1Time>
+      <ZoomStartTime time="0.000 ns"></ZoomStartTime>
+      <ZoomEndTime time="602.012 ns"></ZoomEndTime>
+      <Cursor1Time time="30.000 ns"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="193"></NameColumnWidth>
-      <ValueColumnWidth column_width="159"></ValueColumnWidth>
+      <ValueColumnWidth column_width="151"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="13" />
    <wvobject fp_name="/main_tb/rst" type="logic">
       <obj_property name="ElementShortName">rst</obj_property>
       <obj_property name="ObjectShortName">rst</obj_property>
@@ -186,6 +186,7 @@
       <wvobject fp_name="/main_tb/DUT/regs/register" type="array">
          <obj_property name="ElementShortName">register[31:0][31:0]</obj_property>
          <obj_property name="ObjectShortName">register[31:0][31:0]</obj_property>
+         <obj_property name="isExpanded"></obj_property>
       </wvobject>
    </wvobject>
    <wvobject fp_name="group54" type="group">
@@ -338,6 +339,134 @@
       <wvobject fp_name="/main_tb/DUT/aluctrl/alusel" type="array">
          <obj_property name="ElementShortName">alusel[3:0]</obj_property>
          <obj_property name="ObjectShortName">alusel[3:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group135" type="group">
+      <obj_property name="label">ALU</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/main_tb/DUT/aluinst/A" type="array">
+         <obj_property name="ElementShortName">A[31:0]</obj_property>
+         <obj_property name="ObjectShortName">A[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/B" type="array">
+         <obj_property name="ElementShortName">B[31:0]</obj_property>
+         <obj_property name="ObjectShortName">B[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/sel" type="array">
+         <obj_property name="ElementShortName">sel[3:0]</obj_property>
+         <obj_property name="ObjectShortName">sel[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/result" type="array">
+         <obj_property name="ElementShortName">result[31:0]</obj_property>
+         <obj_property name="ObjectShortName">result[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/cf" type="logic">
+         <obj_property name="ElementShortName">cf</obj_property>
+         <obj_property name="ObjectShortName">cf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/zf" type="logic">
+         <obj_property name="ElementShortName">zf</obj_property>
+         <obj_property name="ObjectShortName">zf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/vf" type="logic">
+         <obj_property name="ElementShortName">vf</obj_property>
+         <obj_property name="ObjectShortName">vf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/sf" type="logic">
+         <obj_property name="ElementShortName">sf</obj_property>
+         <obj_property name="ObjectShortName">sf</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/shamt" type="array">
+         <obj_property name="ElementShortName">shamt[4:0]</obj_property>
+         <obj_property name="ObjectShortName">shamt[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/funct3" type="array">
+         <obj_property name="ElementShortName">funct3[2:0]</obj_property>
+         <obj_property name="ObjectShortName">funct3[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/branch_taken" type="logic">
+         <obj_property name="ElementShortName">branch_taken</obj_property>
+         <obj_property name="ObjectShortName">branch_taken</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/AND" type="array">
+         <obj_property name="ElementShortName">AND[31:0]</obj_property>
+         <obj_property name="ObjectShortName">AND[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/OR" type="array">
+         <obj_property name="ElementShortName">OR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">OR[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/XOR" type="array">
+         <obj_property name="ElementShortName">XOR[31:0]</obj_property>
+         <obj_property name="ObjectShortName">XOR[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/SLL" type="array">
+         <obj_property name="ElementShortName">SLL[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SLL[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/SRL" type="array">
+         <obj_property name="ElementShortName">SRL[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SRL[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/SRA" type="array">
+         <obj_property name="ElementShortName">SRA[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SRA[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/add" type="array">
+         <obj_property name="ElementShortName">add[31:0]</obj_property>
+         <obj_property name="ObjectShortName">add[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/sub" type="array">
+         <obj_property name="ElementShortName">sub[31:0]</obj_property>
+         <obj_property name="ObjectShortName">sub[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/SLT" type="array">
+         <obj_property name="ElementShortName">SLT[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SLT[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/SLTU" type="array">
+         <obj_property name="ElementShortName">SLTU[31:0]</obj_property>
+         <obj_property name="ObjectShortName">SLTU[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/aluinst/n" type="array">
+         <obj_property name="ElementShortName">n[31:0]</obj_property>
+         <obj_property name="ObjectShortName">n[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group112" type="group">
+      <obj_property name="label">forward</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/main_tb/DUT/forward/ID_EX_rs1" type="array">
+         <obj_property name="ElementShortName">ID_EX_rs1[4:0]</obj_property>
+         <obj_property name="ObjectShortName">ID_EX_rs1[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/ID_EX_rs2" type="array">
+         <obj_property name="ElementShortName">ID_EX_rs2[4:0]</obj_property>
+         <obj_property name="ObjectShortName">ID_EX_rs2[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/EX_MEM_rd" type="array">
+         <obj_property name="ElementShortName">EX_MEM_rd[4:0]</obj_property>
+         <obj_property name="ObjectShortName">EX_MEM_rd[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/MEM_WB_rd" type="array">
+         <obj_property name="ElementShortName">MEM_WB_rd[4:0]</obj_property>
+         <obj_property name="ObjectShortName">MEM_WB_rd[4:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/EX_MEM_regwr" type="logic">
+         <obj_property name="ElementShortName">EX_MEM_regwr</obj_property>
+         <obj_property name="ObjectShortName">EX_MEM_regwr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/MEM_WB_regwr" type="logic">
+         <obj_property name="ElementShortName">MEM_WB_regwr</obj_property>
+         <obj_property name="ObjectShortName">MEM_WB_regwr</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/forwardA" type="array">
+         <obj_property name="ElementShortName">forwardA[1:0]</obj_property>
+         <obj_property name="ObjectShortName">forwardA[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/main_tb/DUT/forward/forwardB" type="array">
+         <obj_property name="ElementShortName">forwardB[1:0]</obj_property>
+         <obj_property name="ObjectShortName">forwardB[1:0]</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>
